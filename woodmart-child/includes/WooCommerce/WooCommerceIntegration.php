@@ -110,27 +110,30 @@ class WooCommerceIntegration {
          * Удаляет использованные или истекшие RPG-купоны из базы.
          */
         public function cleanup_expired_rpg_coupons() {
-                $args = array(
-                        'post_type'      => 'shop_coupon',
-                        'posts_per_page' => -1,
-                        'meta_key'       => 'rpg_coupon',
-                        'meta_value'     => 1,
-                );
-                $coupons = get_posts( $args );
-                if ( empty( $coupons ) ) {
-                        return;
-                }
-                foreach ( $coupons as $coupon_post ) {
-                        $coupon = new \WC_Coupon( $coupon_post->ID );
-                        $expired = false;
+               $args = array(
+                       'post_type'      => 'shop_coupon',
+                       'posts_per_page' => -1,
+                       'meta_key'       => 'rpg_coupon',
+                       'meta_value'     => 1,
+                       // Запрашиваем только идентификаторы, чтобы снизить потребление памяти.
+                       'fields'         => 'ids',
+               );
+               $coupon_ids = get_posts( $args );
+               if ( empty( $coupon_ids ) ) {
+                       return;
+               }
+               foreach ( $coupon_ids as $coupon_id ) {
+                       // Загружаем объект купона для проверки данных.
+                       $coupon = new \WC_Coupon( $coupon_id );
+                       $expired = false;
                         if ( $coupon->get_date_expires() && $coupon->get_date_expires()->getTimestamp() < current_time( 'timestamp', true ) ) {
                                 $expired = true;
                         } elseif ( $coupon->get_usage_limit() > 0 && $coupon->get_usage_count() >= $coupon->get_usage_limit() ) {
                                 $expired = true;
                         }
-                        if ( $expired ) {
-                                wp_delete_post( $coupon_post->ID, true );
+                       if ( $expired ) {
+                                wp_delete_post( $coupon_id, true );
                         }
-                }
-        }
+               }
+       }
 }
