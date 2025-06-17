@@ -373,4 +373,4 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p class="no-coupons-message"><?php esc_html_e( 'Ваш инвентарь купонов продавцов пуст. Вы можете получить их на страницах магазинов или добавить по коду выше.', 'woodmart-child' ); ?></p> 
         <?php endif; ?>
     </div>
-</div>	
+</div>
