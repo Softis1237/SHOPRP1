@@ -1,0 +1,779 @@
+/*
+Theme Name:   Woodmart Child
+Template:     Woodmart
+Version:      1.0.3
+Author:       Ваше имя
+Description:  Дочерняя тема для Woodmart
+*/
+
+/* --- Общие стили для RPG Страницы Персонажа --- */
+.rpg-character-page {
+    background-color: #1e1e2f; /* Темно-сине-фиолетовый фон */
+    color: #d0d0e0; /* Светлый текст */
+    padding: 25px;
+    border: 1px solid #3a3a5a;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif; /* Более современный шрифт, если доступен */
+}
+
+.rpg-character-page h2,
+.rpg-character-page h3,
+.rpg-character-page h4 {
+    color: #e0e0ff; 
+    border-bottom: 1px solid #50507a;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-weight: 500; /* Немного жирнее */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    letter-spacing: 0.5px;
+}
+.rpg-character-page h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.rpg-character-page h3 {
+    font-size: 1.6em;
+}
+.rpg-character-page h4 {
+    font-size: 1.3em;
+    border-bottom: none;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #c0c0f0;
+}
+
+.rpg-character-page .rpg-section {
+    margin-bottom: 35px;
+    padding: 25px;
+    background-color: rgba(40, 40, 60, 0.8); 
+    border: 1px solid #4a4a6a; 
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,0,0,0.5);
+}
+
+.rpg-character-page p {
+    margin: 14px 0;
+    line-height: 1.75;
+    color: #c0c0d0; 
+}
+.rpg-character-page p strong {
+    color: #e8e8ff; 
+    font-weight: 600;
+}
+.rpg-character-page small {
+    color: #9090b0;
+    font-size: 0.9em;
+}
+
+/* Прогресс-бар */
+.rpg-character-page progress {
+    width: 100%;
+    height: 16px; /* Чуть выше */
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #50507a;
+    background-color: #2a2a4a;
+    display: block; 
+}
+.rpg-character-page progress::-webkit-progress-bar {
+    background-color: #2a2a4a;
+    border-radius: 8px;
+}
+.rpg-character-page progress::-webkit-progress-value {
+    background: linear-gradient(to right, #7e57c2, #512da8); /* Фиолетовый градиент */
+    border-radius: 8px;
+    transition: width 0.5s ease;
+    box-shadow: inset 0 -2px 2px rgba(255,255,255,0.15);
+}
+.rpg-character-page progress::-moz-progress-bar {
+    background: linear-gradient(to right, #7e57c2, #512da8);
+    border-radius: 8px;
+    transition: width 0.5s ease;
+    box-shadow: inset 0 -2px 2px rgba(255,255,255,0.15);
+}
+
+/* Блок сообщений */
+.rpg-character-page .rpg-message-box { 
+    margin: 15px 0;
+    padding: 15px 20px; /* Увеличим паддинг */
+    border: 1px solid transparent;
+    border-left-width: 4px; /* Акцентная полоса слева */
+    border-radius: 4px;
+    font-size: 1em; /* Чуть крупнее */
+    text-shadow: none; /* Уберем тень для лучшей читаемости */
+}
+.rpg-character-page .rpg-message-box.success {
+    background-color: rgba(76, 175, 80, 0.15); 
+    border-color: #4CAF50;
+    color: #a5d6a7; 
+}
+.rpg-character-page .rpg-message-box.error {
+    background-color: rgba(244, 67, 54, 0.15); 
+    border-color: #F44336;
+    color: #ef9a9a; 
+}
+.rpg-character-page .rpg-message-box.info {
+    background-color: rgba(33, 150, 243, 0.15); 
+    border-color: #2196F3;
+    color: #90caf9; 
+}
+
+/* --- Стили Инвентаря Купонов (Сетка) --- */
+.coupon-inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 25px; 
+    margin-top: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #50507a;
+    align-items: start; 
+}
+
+.coupon-item {
+    background-color: rgba(45, 45, 70, 0.85); 
+    border: 1px solid #60608a; 
+    border-radius: 6px; 
+    padding: 20px; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 220px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4), inset 0 0 10px rgba(0,0,0,0.6);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    box-sizing: border-box; 
+}
+.coupon-item:hover {
+    transform: translateY(-5px) scale(1.03); 
+    box-shadow: 0 6px 20px rgba(100, 100, 220, 0.35); 
+    border-color: #8080f0;
+}
+
+.coupon-item .coupon-icon {
+    font-size: 3em; 
+    margin-bottom: 15px;
+    color: #9fa8da; 
+    text-shadow: 0 0 10px rgba(159, 168, 218, 0.5);
+}
+.coupon-item .fa-calendar-day, .coupon-item .fas.fa-calendar-day { color: #ffcc80; } 
+.coupon-item .fa-calendar-week, .coupon-item .fas.fa-calendar-week { color: #ffb74d; } 
+.coupon-item .fa-star, .coupon-item .fas.fa-star { color: #fff176; } 
+.coupon-item .fa-shopping-cart, .coupon-item .fas.fa-shopping-cart { color: #81d4fa; } 
+.coupon-item .fa-tag, .coupon-item .fas.fa-tag { color: #a5d6a7; } 
+.coupon-item .fa-percentage, .coupon-item .fas.fa-percentage, 
+.coupon-item .fa-tags, .coupon-item .fas.fa-tags { color: #ce93d8; }
+.coupon-item .fa-ticket-alt, .coupon-item .fas.fa-ticket-alt { color: #9fa8da; }
+
+.coupon-item .coupon-text {
+    font-size: 0.95em;
+    color: #b0b0d0; 
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1; 
+    width: 100%; 
+    overflow-wrap: break-word; 
+    word-wrap: break-word; 
+}
+.coupon-item .coupon-text strong { 
+    display: block;
+    font-size: 1.3em;
+    color: #f0f0ff; 
+    margin-top: 5px;
+}
+.coupon-item .coupon-text small {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.85em;
+    color: #8080a0; 
+}
+
+.coupon-item .button { 
+    padding: 10px 18px; 
+    font-size: 0.95em; 
+    width: 100%; 
+    margin-left: 0; 
+    border-radius: 25px; 
+    background: linear-gradient(to right, #673ab7, #512da8); 
+    border: 1px solid #4527a0;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    flex-shrink: 0; 
+    margin-top: auto; 
+}
+.coupon-item .button:hover:not(:disabled) {
+    background: linear-gradient(to right, #7e57c2, #673ab7);
+    border-color: #512da8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+.coupon-item .button:disabled {
+     background: #404060; 
+     border-color: #303050;
+     color: #8080a0;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+
+/* --- Стили для активных купонов и способностей --- */
+.active-coupons-section h3 {
+    margin-bottom: 15px;
+}
+.active-coupon-notice {
+    padding: 12px 18px;
+    background-color: rgba(76, 175, 80, 0.2); 
+    border: 1px solid #4CAF50;
+    border-left-width: 4px;
+    color: #c8e6c9;
+    border-radius: 4px;
+    margin-bottom: 12px; 
+    text-align: left; 
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+}
+.active-coupon-notice.dokan-active-notice {
+    background-color: rgba(33, 150, 243, 0.2); 
+    border-color: #2196F3;
+    color: #bbdefb;
+}
+.active-coupon-notice strong {
+    color: #e8f5e9; 
+}
+.active-coupon-notice.dokan-active-notice strong {
+    color: #e3f2fd;
+}
+.active-coupon-notice .coupon-icon {
+    margin-right: 10px;
+    font-size: 1.2em; 
+    vertical-align: -2px;
+}
+
+.ability-block {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed #50507a;
+}
+.ability-block:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+.ability-block p i { 
+    color: #ffcc80; 
+    font-style: normal;
+}
+#activate-elf-sense, #activate-orc-rage {
+     background: linear-gradient(to right, #ff7043, #f4511e); 
+     color: white;
+     border: 1px solid #e64a19;
+     padding: 12px 22px; 
+     margin-left: 0; 
+     margin-top: 12px; 
+     cursor: pointer;
+     border-radius: 25px; 
+     transition: all 0.3s ease;
+     font-size: 1.05em; 
+     box-shadow: 0 3px 5px rgba(0,0,0,0.25);
+     text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+     font-weight: 500;
+}
+#activate-elf-sense:hover:not(:disabled), 
+#activate-orc-rage:hover:not(:disabled) {
+     background: linear-gradient(to right, #ff8a65, #ff7043);
+     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+     transform: translateY(-2px);
+}
+#activate-elf-sense:disabled, 
+#activate-orc-rage:disabled {
+     background: #505070;
+     border-color: #404060;
+     color: #9090b0;
+     cursor: not-allowed;
+     box-shadow: none;
+     transform: none;
+     opacity: 0.7;
+}
+
+/* Иконки рас */
+.rpg-race-icon {
+    display: inline-block;
+    width: 28px; 
+    height: 28px;
+    margin-right: 10px;
+    vertical-align: -7px; 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.6)); 
+}
+.rpg-race-icon.fa-user { color: #a0a0a0; } /* Human */
+.rpg-race-icon.fa-leaf { color: #81c784; } /* Elf */
+.rpg-race-icon.fa-fist-raised { color: #ef5350; } /* Orc */
+.rpg-race-icon.fa-gem { color: #64b5f6; } /* Dwarf */
+.rpg-race-icon.fa-question-circle { color: #78909c; } /* Unknown */
+
+/* Стили для корзины (выбор способностей) */
+.rpg-ability-selection { 
+    padding: 20px;
+    margin-top: 25px;
+    background-color: rgba(45, 45, 70, 0.8);
+    border: 1px solid #60608a;
+    border-radius: 6px;
+    color: #c0c0d0;
+}
+.rpg-ability-selection h3 {
+    color: #e0e0ff;
+    border-color: #50507a;
+    margin-top: 0;
+    font-size: 1.4em;
+}
+.rpg-ability-selection label, .rpg-ability-selection p {
+    color: #c0c0d0;
+    margin-bottom: 10px;
+    display: block; 
+}
+.rpg-ability-selection .button {
+     background: linear-gradient(to right, #673ab7, #512da8);
+     border-color: #4527a0;
+     color: white;
+     padding: 10px 18px;
+     border-radius: 25px;
+     margin-top: 15px;
+     font-weight: 500;
+}
+.rpg-ability-selection .button:hover:not(:disabled) {
+     background: linear-gradient(to right, #7e57c2, #673ab7);
+     border-color: #512da8;
+}
+
+/* --- Стили для Dokan купонов на странице персонажа --- */
+.rpg-vendor-coupons .add-dokan-coupon-by-code-form {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: rgba(50, 50, 80, 0.75);
+    border: 1px solid #60608a;
+    border-radius: 6px;
+}
+.rpg-vendor-coupons .add-dokan-coupon-by-code-form h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #e0e0ff;
+}
+.rpg-vendor-coupons .add-dokan-coupon-by-code-form input[type="text"] {
+    padding: 12px 15px; 
+    background-color: #25253f; 
+    border: 1px solid #50507a;
+    color: #d0d0e0;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: calc(100% - 240px); 
+    max-width: 350px; 
+    box-sizing: border-box;
+}
+.rpg-vendor-coupons .add-dokan-coupon-by-code-form .button {
+    background: linear-gradient(to right, #009688, #00796b); 
+    color: white;
+    border: 1px solid #00695c;
+    padding: 12px 20px; 
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+}
+.rpg-vendor-coupons .add-dokan-coupon-by-code-form .button:hover:not(:disabled) {
+    background: linear-gradient(to right, #26a69a, #00897b);
+}
+
+.dokan-coupon-filters {
+    margin-bottom: 25px; 
+    padding-bottom: 25px;
+    border-bottom: 1px solid #50507a;
+    display: flex; 
+    align-items: center;
+    flex-wrap: wrap; 
+}
+.dokan-coupon-filters label {
+    margin-right: 10px;
+    color: #c0c0d0;
+    margin-bottom: 8px; 
+}
+.dokan-coupon-filters select {
+    padding: 12px; 
+    background-color: #25253f;
+    border: 1px solid #50507a;
+    color: #d0d0e0;
+    border-radius: 4px;
+    margin-right: 20px;
+    min-width: 200px; 
+    margin-bottom: 8px; 
+}
+.dokan-coupon-filters .button { 
+    background: linear-gradient(to right, #607d8b, #455a64); 
+    color: white;
+    border: 1px solid #37474f;
+    padding: 11px 18px; 
+    font-size: 0.9em;
+    border-radius: 4px;
+    margin-bottom: 8px; 
+    font-weight: 500;
+}
+.dokan-coupon-filters .button:hover:not(:disabled) {
+    background: linear-gradient(to right, #78909c, #546e7a);
+}
+
+.coupon-item.dokan-coupon-item {
+    border-left: 5px solid #80deea; 
+    padding-left: 15px; 
+}
+.coupon-item.dokan-coupon-item .dokan-coupon-store-name {
+    display: block;
+    font-size: 0.95em; 
+    color: #b3e5fc; 
+    margin-bottom: 10px; 
+    font-weight: 600; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- Стили для купонов Dokan на странице магазина --- */
+#dokan-content > div.store-coupon-wrap,
+.dokan-store-sidebar .widget_dokan_store_coupon ul.dokan-store-coupon,
+.dokan-store-coupons .dokan-coupons,
+body.dokan-store .store-content-area .dokan-coupon-content .coupon_container,
+.store-coupons-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 10px 0;
+    align-items: start;
+    list-style: none;
+    margin: 0;
+}
+
+#dokan-content > div.store-coupon-wrap > div,
+#dokan-content > div.store-coupon-wrap > article,
+.dokan-store-sidebar .widget_dokan_store_coupon ul.dokan-store-coupon > li,
+.dokan-store-coupons .dokan-coupons > li {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.store-coupon-item-rpg {
+    background-color: rgba(45, 45, 70, 0.85);
+    border: 1px solid #60608a;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 210px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4), inset 0 0 10px rgba(0,0,0,0.6);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    color: #d0d0e0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.store-coupon-item-rpg:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(100, 100, 220, 0.35);
+    border-color: #8080f0;
+}
+
+.store-coupon-item-rpg .coupon-icon {
+    font-size: 2.2em;
+    margin-bottom: 8px;
+    color: #9fa8da;
+    text-shadow: 0 0 8px rgba(159, 168, 218, 0.4);
+}
+
+.store-coupon-item-rpg .coupon-text {
+    font-size: 0.85em;
+    color: #b0b0d0;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    flex-grow: 1;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.store-coupon-item-rpg .coupon-text strong {
+    display: block;
+    font-size: 1.15em;
+    color: #f0f0ff;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.store-coupon-item-rpg .coupon-text small,
+.store-coupon-item-rpg .min-spend,
+.store-coupon-item-rpg .expiring-in {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.75em;
+    color: #8080a0;
+}
+.store-coupon-item-rpg .dokan-coupon-store-name {
+    display: block;
+    font-size: 0.9em;
+    color: #c5cae9;
+    margin-bottom: 6px;
+    font-weight: 600;
+    text-transform: none;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.store-coupon-item-rpg .coupon-description {
+    font-size: 0.8em;
+    color: #a0a0c0;
+    margin-bottom: 4px;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.store-coupon-item-rpg .rpg-take-dokan-coupon-btn {
+    padding: 8px 14px;
+    font-size: 0.85em;
+    width: 100%;
+    border-radius: 20px;
+    background: linear-gradient(to right, #673ab7, #512da8);
+    border: 1px solid #4527a0;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.store-coupon-item-rpg .rpg-take-dokan-coupon-btn:hover:not(:disabled) {
+    background: linear-gradient(to right, #7e57c2, #673ab7);
+    border-color: #512da8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+.store-coupon-item-rpg .rpg-take-dokan-coupon-btn:disabled {
+    background: #404060;
+    border-color: #303050;
+    color: #8080a0;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.store-coupon-item-rpg .rpg-dokan-coupon-limit-msg,
+.store-coupon-item-rpg .rpg-dokan-coupon-message {
+    font-size: 0.75em;
+    color: #a0a0c0;
+    margin-top: 5px;
+    text-align: center;
+    width: 100%;
+    line-height: 1.3;
+}
+.store-coupon-item-rpg .rpg-dokan-coupon-message.success { color: #a5d6a7; }
+.store-coupon-item-rpg .rpg-dokan-coupon-message.error { color: #ef9a9a; }
+.store-coupon-item-rpg .rpg-dokan-coupon-message.info { color: #90caf9; }
+
+/* Адаптивность для инвентарей и купонов магазина */
+@media (max-width: 768px) {
+    #dokan-content > div.store-coupon-wrap,
+    .coupon-inventory-grid,
+    .dokan-store-sidebar .widget_dokan_store_coupon ul.dokan-store-coupon,
+    .dokan-store-coupons .dokan-coupons,
+    body.dokan-store .store-content-area .dokan-coupon-content .coupon_container,
+    .store-coupons-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 10px;
+    }
+    .rpg-vendor-coupons .add-dokan-coupon-by-code-form {
+        display: flex;
+        flex-direction: column;
+    }
+    .rpg-vendor-coupons .add-dokan-coupon-by-code-form input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    .rpg-vendor-coupons .add-dokan-coupon-by-code-form .button {
+        width: 100%;
+    }
+    .dokan-coupon-filters {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .dokan-coupon-filters label {
+        margin-bottom: 5px;
+    }
+    .dokan-coupon-filters select, .dokan-coupon-filters .button {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    #dokan-content > div.store-coupon-wrap,
+    .coupon-inventory-grid,
+    .dokan-store-sidebar .widget_dokan_store_coupon ul.dokan-store-coupon,
+    .dokan-store-coupons .dokan-coupons,
+    body.dokan-store .store-content-area .dokan-coupon-content .coupon_container,
+    .store-coupons-grid {
+        grid-template-columns: 1fr;
+    }
+    .rpg-character-page h3 {
+        font-size: 1.4em;
+    }
+    .coupon-item, .store-coupon-item-rpg {
+        min-height: auto;
+        padding: 15px;
+    }
+    .coupon-item .coupon-icon, .store-coupon-item-rpg .coupon-icon {
+        font-size: 2.2em;
+        margin-bottom: 8px;
+    }
+    .coupon-item .button, .store-coupon-item-rpg .rpg-take-dokan-coupon-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+    #activate-elf-sense, #activate-orc-rage,
+    .rpg-vendor-coupons .add-dokan-coupon-by-code-form .button,
+    .dokan-coupon-filters .button {
+        padding: 10px 15px;
+        font-size: 0.95em;
+    }
+}
+
+/* Стилизация WooCommerce цены */
+.woocommerce-Price-amount.amount {
+    color: #e0e0ff;
+    font-weight: 600;
+}
+.woocommerce-Price-amount.amount .woocommerce-Price-currencySymbol {
+    color: #9fa8da;
+    margin-right: 2px;
+}
+
+/* Кастомная форма купона в корзине */
+.rpg-custom-coupon-form-cart {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(40, 40, 60, 0.8);
+    border: 1px solid #4a4a6a;
+    border-radius: 6px;
+}
+.rpg-custom-coupon-form-cart h3 {
+    color: #e0e0ff;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+.rpg-custom-coupon-form-cart p {
+    color: #c0c0d0;
+    margin-bottom: 15px;
+    font-size: 0.95em;
+}
+.rpg-cart-coupon-input-group {
+    display: flex;
+    gap: 10px;
+}
+.rpg-cart-coupon-input-group input[type="text"] {
+    flex-grow: 1;
+    padding: 10px 12px;
+    background-color: #25253f;
+    border: 1px solid #50507a;
+    color: #d0d0e0;
+    border-radius: 4px;
+}
+.rpg-cart-coupon-input-group .button {
+    background: linear-gradient(to right, #009688, #00796b);
+    color: white;
+    border: 1px solid #00695c;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+.rpg-cart-coupon-input-group .button:hover:not(:disabled) {
+    background: linear-gradient(to right, #26a69a, #00897b);
+}
+.rpg-cart-coupon-message {
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+.rpg-cart-coupon-message.success { color: #a5d6a7; }
+.rpg-cart-coupon-message.error { color: #ef9a9a; }
+.rpg-cart-coupon-message.info { color: #90caf9; }
+/* Стили для деталей купона Dokan на странице персонажа */
+.coupon-item.dokan-coupon-item .rpg-coupon-details-toggle {
+    font-size: 0.85em;
+    color: #a0a0e0; /* Или другой цвет для ссылки */
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block; /* Чтобы не занимал всю ширину */
+    margin-top: 8px;
+    margin-bottom: 5px; /* Отступ перед кнопкой активации */
+}
+.coupon-item.dokan-coupon-item .rpg-coupon-details-toggle:hover {
+    color: #c0c0ff;
+}
+
+.coupon-item.dokan-coupon-item .rpg-coupon-full-details {
+    text-align: left;
+    font-size: 0.85em;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #50507a80; /* Полупрозрачная линия */
+    width: 100%;
+    color: #b0b0d0;
+}
+.coupon-item.dokan-coupon-item .rpg-coupon-full-details p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+.coupon-item.dokan-coupon-item .rpg-coupon-full-details p strong {
+    color: #c5cae9; /* Как у названия магазина */
+    display: inline; /* Чтобы не переносилось на новую строку */
+}
+
+/* Стили для невалидных купонов в инвентаре (если нужно их как-то выделить) */
+.coupon-item.coupon-invalid {
+    opacity: 0.7;
+    border-left-color: #f44336 !important; /* Красный акцент для невалидных */
+}
+.coupon-item.coupon-invalid .button {
+    background: #555 !important;
+    border-color: #444 !important;
+    cursor: not-allowed !important;
+}
+
+/* Стили для кнопки "Очистить инвентарь" */
+.rpg-dokan-inventory-actions .button-danger {
+    background-color: #f44336 !important;
+    border-color: #d32f2f !important;
+    color: white !important;
+}
+.rpg-dokan-inventory-actions .button-danger:hover {
+    background-color: #e53935 !important;
+    border-color: #c62828 !important;
+}
+
+/* Сообщение, если инвентарь пуст после JS удаления */
+.dokan-coupon-inventory-grid p.no-coupons-message {
+    grid-column: 1 / -1; /* Растянуть на всю ширину грида */
+    text-align: center;
+    padding: 20px;
+    color: #9090b0;
+}

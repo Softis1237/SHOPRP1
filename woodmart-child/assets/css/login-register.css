@@ -1,0 +1,220 @@
+/* Центрируем контейнер с формами */
+.wd-login-container {
+    max-width: auto;
+    margin: 0 auto;
+    padding: auto;
+}
+
+/* Стили для формы входа */
+.wd-login-form {
+    display: block;
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+
+
+/* Убираем белый фон у контейнера формы регистрации */
+.wd-register-form.col-register {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+/* Стили для кнопки переключения */
+.wd-switch-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.wd-switch-to-register {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6d4eec;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.wd-switch-to-register:hover {
+    background-color: #5a3ed1;
+}
+
+/* Стили для формы регистрации (включая Elementor) */
+.wd-register-form .woocommerce-form-register,
+.wd-register-form .woocommerce-form-register .form-row {
+    max-width: 400px;
+    margin: 0;
+    padding: 20px;
+    background: #333 !important;
+    border-radius: 10px;
+    color: #fff !important;
+    box-sizing: border-box;
+}
+
+.wd-register-form .woocommerce-form-register {
+    margin: 0 auto;
+}
+
+.wd-register-form .woocommerce-form-register label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #fff !important;
+}
+
+.wd-register-form .woocommerce-form-register input[type="text"],
+.wd-register-form .woocommerce-form-register input[type="email"],
+.wd-register-form .woocommerce-form-register input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #666 !important;
+    border-radius: 5px;
+    background: #444 !important;
+    color: #fff !important;
+    box-sizing: border-box;
+}
+
+.wd-register-form .woocommerce-form-register .woocommerce-Button {
+    background: #6d4eec !important;
+    color: #fff !important;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.wd-register-form .woocommerce-form-register .woocommerce-Button:hover {
+    background: #5a3ed1 !important;
+}
+
+/* Стили для формы входа */
+.wd-login-form .woocommerce-form-login {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #333;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.wd-login-form .woocommerce-form-login label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.wd-login-form .woocommerce-form-login input[type="text"],
+.wd-login-form .woocommerce-form-login input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #666;
+    border-radius: 5px;
+    background: #444;
+    color: #fff;
+}
+
+.wd-login-form .woocommerce-form-login .woocommerce-form-login__submit {
+    background: #6d4eec;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.wd-login-form .woocommerce-form-login .woocommerce-form-login__submit:hover {
+    background: #5a3ed1;
+}
+
+/* Стили для выбора гендера */
+.gender-select {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+.gender-option {
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gender-option span {
+    padding: 10px 20px;
+    background-color: #444;
+    color: #fff;
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+    border: 2px solid #666;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.gender-option:hover span {
+    background-color: #555;
+}
+
+.gender-option input[type="radio"]:checked + span {
+    background-color: #6d4eec;
+    border-color: #5a3ed1;
+}
+
+.gender-option input[type="radio"] {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .gender-option span {
+        padding: 12px 25px;
+        font-size: 18px;
+    }
+}
+
+/* Стили для флип-боксов */
+.custom-flip-box {
+    cursor: pointer;
+}
+
+/* Убираем кнопку "Click Here" */
+.custom-flip-box .elementor-flip-box__button {
+    display: none !important;
+}
+
+/* Стили для перевёрнутого состояния */
+.custom-flip-box.elementor-flip-box--flipped {
+    transform: scale(1.1);
+    
+}
+
+/* Переопределяем стили Elementor для контейнеров */
+.wd-register-form .elementor-container,
+.wd-register-form .e-con-inner {
+    background: transparent !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+/* Убираем лишние стили для формы */
+.wd-register-form .woocommerce-form-register .woocommerce-privacy-policy-text {
+    color: #fff !important;
+}
+
+.wd-register-form .woocommerce-form-register .woocommerce-privacy-policy-text a {
+    color: #6d4eec !important;
+}
