@@ -38,7 +38,7 @@ class WooCommerceIntegration {
 	 *
 	 * @param int $order_id ID заказа.
 	 */
-	public function handle_order_completion( $order_id ) {
+        public function handle_order_completion( $order_id ) {
 		$order = wc_get_order( $order_id );
 		if ( ! $order ) {
 			// error_log( "WoodmartChildRPG: Заказ $order_id не найден в handle_order_completion." );
@@ -73,7 +73,7 @@ class WooCommerceIntegration {
 		$user_race_slug = $this->character_manager->get_race( $user_id );
 		$current_level  = $this->character_manager->get_level( $user_id );
 
-		if ( 'human' === $user_race_slug && $current_level >= 3 ) {
+                if ( 'human' === $user_race_slug && $current_level >= 3 ) {
 			$last_exclusive_coupon_month = $this->character_manager->get_meta( $user_id, 'last_exclusive_coupon_month' );
 			$current_month_year          = date( 'm-Y' );
 
@@ -101,8 +101,36 @@ class WooCommerceIntegration {
 
 				} else {
 					// error_log( "WoodmartChildRPG: Инвентарь купонов переполнен для пользователя $user_id. Эксклюзивные купоны не выданы." );
-				}
-			}
-		}
-	}
+                                }
+                        }
+                }
+        }
+
+        /**
+         * Удаляет использованные или истекшие RPG-купоны из базы.
+         */
+        public function cleanup_expired_rpg_coupons() {
+                $args = array(
+                        'post_type'      => 'shop_coupon',
+                        'posts_per_page' => -1,
+                        'meta_key'       => 'rpg_coupon',
+                        'meta_value'     => 1,
+                );
+                $coupons = get_posts( $args );
+                if ( empty( $coupons ) ) {
+                        return;
+                }
+                foreach ( $coupons as $coupon_post ) {
+                        $coupon = new \WC_Coupon( $coupon_post->ID );
+                        $expired = false;
+                        if ( $coupon->get_date_expires() && $coupon->get_date_expires()->getTimestamp() < current_time( 'timestamp', true ) ) {
+                                $expired = true;
+                        } elseif ( $coupon->get_usage_limit() > 0 && $coupon->get_usage_count() >= $coupon->get_usage_limit() ) {
+                                $expired = true;
+                        }
+                        if ( $expired ) {
+                                wp_delete_post( $coupon_post->ID, true );
+                        }
+                }
+        }
 }
