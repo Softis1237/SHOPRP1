@@ -237,6 +237,7 @@ final class Theme {
         $elf = new \WoodmartChildRPG\RPG\Races\Elf();
         add_action('wcrpg_assign_elf_items_weekly_event', array($elf, 'assign_elf_items_weekly_job'), 10);
         $this->loader->add_action('wcrpg_issue_weekly_human_coupon_event', $this, 'run_weekly_human_coupon_issuance_job');
+        $this->loader->add_action('wcrpg_cleanup_rpg_coupons_event', $this->woocommerce_integration, 'cleanup_expired_rpg_coupons');
 
         // Character page in My Account
         $this->loader->add_filter('woocommerce_account_menu_items', $this, 'add_character_tab_to_account_menu', 20);
@@ -275,7 +276,7 @@ final class Theme {
     /**
      * Регистрирует запланированные события WordPress
      */
-    public function register_scheduled_events() {
+        public function register_scheduled_events() {
         // Еженедельное назначение эльфийских товаров
         if (!wp_next_scheduled('wcrpg_assign_elf_items_weekly_event')) {
             wp_schedule_event(strtotime('next Sunday midnight'), 'weekly', 'wcrpg_assign_elf_items_weekly_event');
@@ -284,6 +285,10 @@ final class Theme {
         // Еженедельная выдача купонов Людям
         if (!wp_next_scheduled('wcrpg_issue_weekly_human_coupon_event')) {
             wp_schedule_event(strtotime('next Monday midnight'), 'weekly', 'wcrpg_issue_weekly_human_coupon_event');
+        }
+
+        if (!wp_next_scheduled('wcrpg_cleanup_rpg_coupons_event')) {
+            wp_schedule_event(strtotime('tomorrow'), 'daily', 'wcrpg_cleanup_rpg_coupons_event');
         }
     }
 

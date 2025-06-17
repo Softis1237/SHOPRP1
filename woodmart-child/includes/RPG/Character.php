@@ -152,22 +152,46 @@ class Character {
 	 * @return bool True если купон добавлен, false если инвентарь полон.
 	 */	
 	
-	public function add_rpg_coupon_to_inventory( $user_id, array $coupon_data, $limit = 10 ) { // <--- НОВЫЙ МЕТОД
-		if ( ! $user_id || empty( $coupon_data ) || ! isset( $coupon_data['type'] ) || ! isset( $coupon_data['value'] ) ) {
-			return false;
-		}
+       public function add_rpg_coupon_to_inventory( $user_id, array $coupon_data, $limit = 10 ) {
+               if ( ! $user_id || empty( $coupon_data ) || ! isset( $coupon_data['type'] ) || ! isset( $coupon_data['value'] ) ) {
+                       return false;
+               }
 
-		$inventory = $this->get_coupon_inventory( $user_id );
+               $inventory = $this->get_coupon_inventory( $user_id );
+               if ( count( $inventory ) >= $limit ) {
+                       return false;
+               }
 
-		if ( count( $inventory ) < $limit ) {
-			$inventory[] = $coupon_data; // Добавляем как есть, предполагая, что тип и значение корректны
-			$this->update_coupon_inventory( $user_id, $inventory );
-			return true;
-		} else {
-			// error_log( "WoodmartChildRPG: Инвентарь купонов пользователя {$user_id} переполнен. Купон не добавлен." );
-			return false;
-		}
-	}
+               $unique_code = sanitize_title( 'rpg-' . $coupon_data['type'] . '-' . $user_id . '-' . time() . '-' . wp_rand( 1000, 9999 ) );
+
+               $coupon_post_id = wp_insert_post( array(
+                       'post_title'  => $unique_code,
+                       'post_name'   => $unique_code,
+                       'post_status' => 'publish',
+                       'post_type'   => 'shop_coupon',
+               ) );
+
+               if ( is_wp_error( $coupon_post_id ) ) {
+                       return false;
+               }
+
+               update_post_meta( $coupon_post_id, 'discount_type', 'percent' );
+               update_post_meta( $coupon_post_id, 'coupon_amount', intval( $coupon_data['value'] ) );
+               update_post_meta( $coupon_post_id, 'usage_limit', 1 );
+               update_post_meta( $coupon_post_id, 'usage_limit_per_user', 1 );
+               update_post_meta( $coupon_post_id, 'rpg_coupon', 1 );
+
+               $user = get_user_by( 'ID', $user_id );
+               if ( $user && $user->user_email ) {
+                       update_post_meta( $coupon_post_id, 'customer_email', array( $user->user_email ) );
+               }
+
+               $coupon_data['code'] = $unique_code;
+               $inventory[]         = $coupon_data;
+               $this->update_coupon_inventory( $user_id, $inventory );
+
+               return true;
+       }
 	
 	/**
 	 * Проверяет и обрабатывает повышение уровня пользователя.

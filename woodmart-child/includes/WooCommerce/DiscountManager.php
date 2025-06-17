@@ -101,12 +101,11 @@ class DiscountManager {
                 $active_rpg_item_coupon = WC()->session ? WC()->session->get( 'active_item_coupon' ) : null;
                 $active_rpg_cart_coupon = WC()->session ? WC()->session->get( 'active_cart_coupon' ) : null;
                 if ($active_rpg_item_coupon || $active_rpg_cart_coupon) {
-                    // Если активируем RPG купон, убедимся, что Dokan сессия RPG очищена
                     if (WC()->session && WC()->session->get('active_rpg_dokan_coupon_details')) {
                         WC()->session->set('active_rpg_dokan_coupon_details', null);
                     }
                 }
-                $this->apply_active_rpg_coupons( $cart, $user_id, $active_rpg_item_coupon, $active_rpg_cart_coupon ); 
+                $this->apply_active_wc_rpg_coupons( $cart, array( $active_rpg_item_coupon, $active_rpg_cart_coupon ) );
             }
         } else {
             // Купон Dokan/WC успешно применен. Убедимся, что RPG-специфичные купоны точно не активны.
@@ -165,7 +164,7 @@ class DiscountManager {
 		}
 	}
 
-	private function apply_active_rpg_coupons( \WC_Cart $cart, $user_id, $active_rpg_item_coupon, $active_rpg_cart_coupon ) {
+        private function apply_active_rpg_coupons( \WC_Cart $cart, $user_id, $active_rpg_item_coupon, $active_rpg_cart_coupon ) {
 		// Логика без изменений, но помним про TODO для условий RPG купонов
 		if ( ! $active_rpg_item_coupon && ! $active_rpg_cart_coupon ) return;
 		$subtotal_after_passive_bonuses = (float) $cart->get_subtotal(); 
@@ -203,13 +202,31 @@ class DiscountManager {
                  wc_add_notice(sprintf(__('RPG купон "%s" не подходит для товаров в вашей корзине и был деактивирован.', 'woodmart-child'), esc_html($coupon_data['description'] ?: __('на товар', 'woodmart-child'))), 'notice');
             }
 		}
-		if ( $active_rpg_cart_coupon && is_array( $active_rpg_cart_coupon ) && isset( $active_rpg_cart_coupon['value'] ) && $subtotal_after_passive_bonuses > 0 ) {
-			$coupon_value = (float) $active_rpg_cart_coupon['value'];
-			$discount_amount = ( $subtotal_after_passive_bonuses * $coupon_value ) / 100;
-			if ( $discount_amount > 0 ) {
-				$discount_amount = min( $discount_amount, $subtotal_after_passive_bonuses ); 
-				$cart->add_fee( $active_rpg_cart_coupon['description'] ?: (__( 'Скидка по RPG купону на корзину', 'woodmart-child' ) . ' (' . $coupon_value . '%)'), - $discount_amount );
-			}
-		}
-	}
+                if ( $active_rpg_cart_coupon && is_array( $active_rpg_cart_coupon ) && isset( $active_rpg_cart_coupon['value'] ) && $subtotal_after_passive_bonuses > 0 ) {
+                        $coupon_value = (float) $active_rpg_cart_coupon['value'];
+                        $discount_amount = ( $subtotal_after_passive_bonuses * $coupon_value ) / 100;
+                        if ( $discount_amount > 0 ) {
+                                $discount_amount = min( $discount_amount, $subtotal_after_passive_bonuses );
+                                $cart->add_fee( $active_rpg_cart_coupon['description'] ?: (__( 'Скидка по RPG купону на корзину', 'woodmart-child' ) . ' (' . $coupon_value . '%)'), - $discount_amount );
+                        }
+                }
+        }
+
+        private function apply_active_wc_rpg_coupons( \WC_Cart $cart, array $active_coupons ) {
+                if ( empty( $active_coupons ) ) {
+                        return;
+                }
+                foreach ( $active_coupons as $coupon_data ) {
+                        if ( ! is_array( $coupon_data ) || empty( $coupon_data['code'] ) ) {
+                                continue;
+                        }
+                        $code = sanitize_text_field( $coupon_data['code'] );
+                        if ( empty( $code ) ) {
+                                continue;
+                        }
+                        if ( ! $cart->has_discount( $code ) && ( is_cart() || is_checkout() ) ) {
+                                $cart->apply_coupon( $code );
+                        }
+                }
+        }
 }

@@ -119,16 +119,22 @@ class Human extends Race {
 			return; // Уже выдан сегодня
 		}
 
-		$level        = $character_manager->get_level( $user_id );
-		$level        = max( 1, min( $level, 5 ) );
-		$coupon_value_map = array( 1 => 3, 2 => 5, 3 => 7, 4 => 9, 5 => 10 );
-		$coupon_value = isset( $coupon_value_map[ $level ] ) ? $coupon_value_map[ $level ] : 3;
+                $level        = $character_manager->get_level( $user_id );
+                $level        = max( 1, min( $level, 5 ) );
+                $coupon_value_map = array( 1 => 3, 2 => 5, 3 => 7, 4 => 9, 5 => 10 );
+                $coupon_value = isset( $coupon_value_map[ $level ] ) ? $coupon_value_map[ $level ] : 3;
 
-		$coupon_data = array(
-			'type'        => 'daily',
-			'value'       => $coupon_value,
-			'description' => sprintf( __( 'Ежедневный купон Человека (%d%%)', 'woodmart-child' ), $coupon_value ),
-		);
+                $upgrade_chance_map = array( 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 );
+                $upgrade_chance     = isset( $upgrade_chance_map[ $level ] ) ? $upgrade_chance_map[ $level ] : 1;
+                if ( wp_rand( 1, 100 ) <= $upgrade_chance ) {
+                        $coupon_value += 2;
+                }
+
+                $coupon_data = array(
+                        'type'        => 'daily',
+                        'value'       => $coupon_value,
+                        'description' => sprintf( __( 'Ежедневный купон Человека (%d%%)', 'woodmart-child' ), $coupon_value ),
+                );
 
 		if ( $character_manager->add_rpg_coupon_to_inventory( $user_id, $coupon_data ) ) {
 			$character_manager->update_meta( $user_id, $last_issued_meta_key, $today );

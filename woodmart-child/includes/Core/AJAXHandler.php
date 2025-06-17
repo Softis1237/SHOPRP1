@@ -61,19 +61,16 @@ class AJAXHandler {
 			wp_send_json_error( array( 'message' => __( 'Уже активирован RPG купон на корзину', 'woodmart-child' ) ) );
 		}
 
-		$value_to_apply = $coupon_to_activate['value'];
-		$save_coupon    = false;
+                $coupon_code = $coupon_to_activate['code'] ?? '';
+                if ( empty( $coupon_code ) ) {
+                        wp_send_json_error( array( 'message' => __( 'Код купона не найден.', 'woodmart-child' ) ) );
+                }
 
-		if ( 'human' === $race && 'daily' === $coupon_to_activate['type'] ) {
-			$upgrade_chance_map = array( 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 );
-			$save_chance_map    = array( 1 => 5, 2 => 7, 3 => 10, 4 => 12, 5 => 15 );
-			$upgrade_chance     = isset( $upgrade_chance_map[ $level ] ) ? $upgrade_chance_map[ $level ] : 1;
-			$save_chance        = isset( $save_chance_map[ $level ] ) ? $save_chance_map[ $level ] : 5;
-			if ( wp_rand( 1, 100 ) <= $upgrade_chance ) $value_to_apply += 2;
-			if ( wp_rand( 1, 100 ) <= $save_chance ) $save_coupon = true;
-		}
-		
-		$coupon_for_session = array( 'type' => $coupon_to_activate['type'], 'value' => $value_to_apply );
+                $coupon_for_session = array(
+                        'type'  => $coupon_to_activate['type'],
+                        'value' => $coupon_to_activate['value'],
+                        'code'  => $coupon_code,
+                );
 
 		if ( WC()->session ) {
 			if ( $is_item_coupon ) WC()->session->set( 'active_item_coupon', $coupon_for_session );
@@ -83,15 +80,11 @@ class AJAXHandler {
 			wp_send_json_error( array( 'message' => __( 'Ошибка сессии WooCommerce.', 'woodmart-child' ) ) );
 		}
 		
-		$message = __( 'RPG купон успешно активирован', 'woodmart-child' );
-		if ( ! $save_coupon ) {
-			unset( $coupons[ $index ] );
-			$this->character_manager->update_coupon_inventory( $user_id, array_values( $coupons ) );
-		} else {
-			$message = __( 'RPG купон успешно активирован и сохранен!', 'woodmart-child' );
-		}
-		wp_send_json_success( array( 'message' => $message ) );
-	}
+                $message = __( 'RPG купон успешно активирован', 'woodmart-child' );
+                unset( $coupons[ $index ] );
+                $this->character_manager->update_coupon_inventory( $user_id, array_values( $coupons ) );
+                wp_send_json_success( array( 'message' => $message ) );
+        }
 
 	public function handle_activate_elf_sense_pending() { 
 		check_ajax_referer( 'rpg_ajax_nonce', '_ajax_nonce' );
