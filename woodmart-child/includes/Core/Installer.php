@@ -29,6 +29,8 @@ class Installer {
 	public static function deactivate() {
 		error_log( 'WoodmartChildRPG Installer: Deactivate hook called.' ); // DEBUG
 		wp_clear_scheduled_hook( 'wcrpg_assign_elf_items_weekly_event' );
+		wp_clear_scheduled_hook( 'wcrpg_issue_weekly_human_coupon_event' );
+		wp_clear_scheduled_hook( 'wcrpg_cleanup_rpg_coupons_event' );
 		flush_rewrite_rules();
 		error_log( 'WoodmartChildRPG Installer: Deactivation complete.' ); // DEBUG
 	}
