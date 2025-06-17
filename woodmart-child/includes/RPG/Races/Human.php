@@ -130,10 +130,14 @@ class Human extends Race {
                         $coupon_value += 2;
                 }
 
+                $save_chance_map = array( 1 => 5, 2 => 7, 3 => 10, 4 => 12, 5 => 15 );
+                $save_chance     = isset( $save_chance_map[ $level ] ) ? $save_chance_map[ $level ] : 5;
+
                 $coupon_data = array(
                         'type'        => 'daily',
                         'value'       => $coupon_value,
                         'description' => sprintf( __( 'Ежедневный купон Человека (%d%%)', 'woodmart-child' ), $coupon_value ),
+                        'save_chance' => $save_chance,
                 );
 
 		if ( $character_manager->add_rpg_coupon_to_inventory( $user_id, $coupon_data ) ) {

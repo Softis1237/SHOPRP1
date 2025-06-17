@@ -74,8 +74,8 @@ class WooCommerceIntegration {
 		$current_level  = $this->character_manager->get_level( $user_id );
 
                 if ( 'human' === $user_race_slug && $current_level >= 3 ) {
-			$last_exclusive_coupon_month = $this->character_manager->get_meta( $user_id, 'last_exclusive_coupon_month' );
-			$current_month_year          = date( 'm-Y' );
+                        $last_exclusive_coupon_month = $this->character_manager->get_meta( $user_id, 'last_exclusive_coupon_month' );
+                        $current_month_year          = date( 'm-Y' );
 
 			if ( $last_exclusive_coupon_month !== $current_month_year ) {
 				$coupon_inventory = $this->character_manager->get_coupon_inventory( $user_id );
@@ -101,6 +101,31 @@ class WooCommerceIntegration {
 
 				} else {
 					// error_log( "WoodmartChildRPG: Инвентарь купонов переполнен для пользователя $user_id. Эксклюзивные купоны не выданы." );
+                                }
+                        }
+                }
+
+                // 6. Обработка "шанса сохранения" использованных RPG-купонов
+                $used_coupon_codes = $order->get_coupon_codes();
+                if ( ! empty( $used_coupon_codes ) ) {
+                        foreach ( $used_coupon_codes as $code ) {
+                                $coupon_obj = new \WC_Coupon( $code );
+                                if ( ! $coupon_obj->get_id() ) {
+                                        continue;
+                                }
+                                if ( 1 != $coupon_obj->get_meta( 'rpg_coupon', true ) ) {
+                                        continue;
+                                }
+                                $save_chance = intval( $coupon_obj->get_meta( 'rpg_save_chance', true ) );
+                                $type        = $coupon_obj->get_meta( 'rpg_type', true );
+                                if ( $save_chance > 0 && wp_rand( 1, 100 ) <= $save_chance ) {
+                                        $clone_data = array(
+                                                'type'        => $type ? $type : 'daily',
+                                                'value'       => intval( $coupon_obj->get_amount() ),
+                                                'description' => $coupon_obj->get_description(),
+                                                'save_chance' => $save_chance,
+                                        );
+                                        $this->character_manager->add_rpg_coupon_to_inventory( $user_id, $clone_data );
                                 }
                         }
                 }

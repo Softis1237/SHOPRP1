@@ -67,9 +67,10 @@ class AJAXHandler {
                 }
 
                 $coupon_for_session = array(
-                        'type'  => $coupon_to_activate['type'],
-                        'value' => $coupon_to_activate['value'],
-                        'code'  => $coupon_code,
+                        'type'        => $coupon_to_activate['type'],
+                        'value'       => $coupon_to_activate['value'],
+                        'code'        => $coupon_code,
+                        'save_chance' => isset( $coupon_to_activate['save_chance'] ) ? intval( $coupon_to_activate['save_chance'] ) : 0,
                 );
 
 		if ( WC()->session ) {

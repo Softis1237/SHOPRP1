@@ -180,6 +180,10 @@ class Character {
                update_post_meta( $coupon_post_id, 'usage_limit', 1 );
                update_post_meta( $coupon_post_id, 'usage_limit_per_user', 1 );
                update_post_meta( $coupon_post_id, 'rpg_coupon', 1 );
+               update_post_meta( $coupon_post_id, 'rpg_type', sanitize_key( $coupon_data['type'] ) );
+               if ( isset( $coupon_data['save_chance'] ) ) {
+                       update_post_meta( $coupon_post_id, 'rpg_save_chance', intval( $coupon_data['save_chance'] ) );
+               }
 
                $user = get_user_by( 'ID', $user_id );
                if ( $user && $user->user_email ) {
