@@ -134,6 +134,12 @@ class WooCommerceIntegration {
                        if ( $expired ) {
                                 wp_delete_post( $coupon_id, true );
                         }
+codex/optimize-coupon-query-in-cleanup_expired_rpg_coupons
                }
        }
 }
+
+                }
+        }
+
+ main
